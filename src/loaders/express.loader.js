@@ -18,6 +18,7 @@ var config = require("../../config/default");
 var publicRoutes = require("../routes/public/home.routes");
 var adminRoutes = require("../routes/admin/admin.routes");
 var adminAuthRoutes = require("../routes/admin/admin.auth.routes");
+var adminContainersRoutes = require("../routes/admin/containers.routes");
 var apiRoutes = require("../routes/api/index");
 
 module.exports = function expressLoader(app) {
@@ -52,11 +53,14 @@ module.exports = function expressLoader(app) {
   // Routes publiques (site vitrine)
   app.use("/", publicRoutes);
 
-  // Routes admin (page dashboard & co)
-  app.use("/admin", adminRoutes);
-
   // Routes d'auth admin (login/logout/profile)
   app.use("/admin/auth", adminAuthRoutes);
+
+  // Page de gestion des containers (protégée par middleware dans le routeur)
+  app.use("/admin/containers", adminContainersRoutes);
+
+  // Routes admin (dashboard & autres pages admin)
+  app.use("/admin", adminRoutes);
 
   // API JSON
   app.use("/api", apiRoutes);

@@ -11,6 +11,7 @@ var express = require("express");
 var router = express.Router();
 
 var usersRoutes = require("./users.routes");
+var containersRoutes = require("./containers.routes");
 
 /**
  * GET /api/status
@@ -26,5 +27,23 @@ router.get("/status", function (req, res) {
 
 // Routes utilisateurs
 router.use("/users", usersRoutes);
+
+/**
+ * GET /api/status
+ * Petit ping de l'API.
+ */
+router.get("/status", function (req, res) {
+  res.json({
+    api: "v1",
+    status: "ok",
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Routes utilisateurs
+router.use("/users", usersRoutes);
+
+// Routes containers
+router.use("/containers", containersRoutes);
 
 module.exports = router;

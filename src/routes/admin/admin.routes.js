@@ -3,7 +3,7 @@
  * Fichier     : src/routes/admin/admin.routes.js
  * Auteur      : Freezer64
  * Code        : CW-API-ADM-001
- * Description : Routes pour l'administration du site (dashboard).
+ * Description : Routes pour le dashboard d'administration.
  * Créé le     : 2025-12-11T01:30:00Z
  */
 
@@ -55,11 +55,12 @@ router.get("/", authMiddleware.isAuthenticated, function (req, res) {
     + "    .card-desc { font-size:0.8rem; color:#9ca3af; margin-bottom:0.6rem; }"
     + "    .card-badge { font-size:0.75rem; color:#22c55e; }"
     + "    .btn-row { margin-top:1.2rem; display:flex; flex-wrap:wrap; gap:0.5rem; }"
-    + "    .btn { font-size:0.85rem; padding:0.4rem 0.7rem; border-radius:0.5rem; border:1px solid #1d4ed8; background:#1d4ed8; color:white; cursor:pointer; }"
+    + "    .btn { font-size:0.85rem; padding:0.4rem 0.7rem; border-radius:0.5rem; border:1px solid #1d4ed8; background:#1d4ed8; color:white; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }"
     + "    .btn.secondary { background:transparent; border-color:#4b5563; color:#e5e7eb; }"
     + "    .btn.danger { background:#b91c1c; border-color:#b91c1c; }"
     + "    .btn:hover { filter:brightness(1.08); }"
     + "    .muted { font-size:0.75rem; color:#6b7280; margin-top:1rem; }"
+    + "    a.btn-link { color:inherit; text-decoration:none; }"
     + "  </style>"
     + "</head>"
     + "<body>"
@@ -79,7 +80,7 @@ router.get("/", authMiddleware.isAuthenticated, function (req, res) {
     + "      <div class='nav-section'>"
     + "        <div class='nav-section-title'>Contenu</div>"
     + "        <ul class='nav'>"
-    + "          <li><a href='#'><span class='icon'>🧱</span><span>Containers (bientôt)</span></a></li>"
+    + "          <li><a href='/admin/containers'><span class='icon'>🧱</span><span>Containers</span></a></li>"
     + "          <li><a href='#'><span class='icon'>🃏</span><span>Cards (bientôt)</span></a></li>"
     + "        </ul>"
     + "      </div>"
@@ -93,9 +94,7 @@ router.get("/", authMiddleware.isAuthenticated, function (req, res) {
     + "    </aside>"
     + "    <main class='main'>"
     + "      <div class='topbar'>"
-    + "        <div class='top-title'>"
-    + "          Panneau d'administration"
-    + "        </div>"
+    + "        <div class='top-title'>Panneau d'administration</div>"
     + "        <div class='user-pill'>"
     + "          <div class='user-avatar'>" + (user.email ? user.email.charAt(0).toUpperCase() : "A") + "</div>"
     + "          <div>"
@@ -113,17 +112,16 @@ router.get("/", authMiddleware.isAuthenticated, function (req, res) {
     + "          </article>"
     + "          <article class='card'>"
     + "            <div class='card-title'>🧱 Containers</div>"
-    + "            <div class='card-desc'>Sections principales du site vitrine (hero, équipes, horaires, tarifs...). Vous pourrez bientôt les créer, réordonner et masquer.</div>"
+    + "            <div class='card-desc'>Sections principales du site vitrine (hero, équipes, horaires, tarifs...). Vous pouvez maintenant les créer, réordonner et masquer.</div>"
     + "            <div class='btn-row'>"
-    + "              <button class='btn secondary' disabled>Voir les containers</button>"
-    + "              <button class='btn secondary' disabled>Ajouter un container</button>"
+    + "              <a class='btn secondary btn-link' href='/admin/containers'>Gérer les containers</a>"
     + "            </div>"
     + "          </article>"
     + "          <article class='card'>"
     + "            <div class='card-title'>🃏 Cards</div>"
-    + "            <div class='card-desc'>Contenu interne des sections (cartes d'information, actualités, coachs, événements...). Géré par container.</div>"
+    + "            <div class='card-desc'>Contenu interne des sections (cartes d'information, actualités, coachs, événements...). Géré par container. Arrive bientôt.</div>"
     + "            <div class='btn-row'>"
-    + "              <button class='btn secondary' disabled>Gérer les cards</button>"
+    + "              <button class='btn secondary' disabled>Gérer les cards (bientôt)</button>"
     + "            </div>"
     + "          </article>"
     + "          <article class='card'>"
@@ -134,9 +132,7 @@ router.get("/", authMiddleware.isAuthenticated, function (req, res) {
     + "            </div>"
     + "          </article>"
     + "        </div>"
-    + "        <p class='muted'>"
-    + "          💡 Astuce : ce dashboard est 100% vanilla JS et prêt pour une migration future vers React (les blocs pourront devenir des composants)."
-    + "        </p>"
+    + "        <p class='muted'>💡 Ce dashboard est 100% vanilla JS et prêt pour une migration future vers React (les blocs pourront devenir des composants).</p>"
     + "      </section>"
     + "    </main>"
     + "  </div>"
@@ -146,7 +142,5 @@ router.get("/", authMiddleware.isAuthenticated, function (req, res) {
 
   res.send(html);
 });
-
-
 
 module.exports = router;
