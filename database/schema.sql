@@ -1,12 +1,18 @@
--- Schéma de base pour le site du club
--- Base : MySQL
--- IMPORTANT :
---  - Le nom de la base doit correspondre à la variable d'environnement DB_NAME (actuellement "club-website").
---  - À exécuter manuellement dans votre client MySQL (phpMyAdmin, CLI, etc.)
+-- Projet      : Club Website
+-- Fichier     : database/schema.sql
+-- Auteur      : Freezer64
+-- Code        : CW-DB-SCHEMA-001
+-- Description : Schéma SQL de base (MySQL).
+-- Créé le     : 2025-12-10T23:25:00Z
 
--- Exemple (à adapter si besoin) :
--- CREATE DATABASE IF NOT EXISTS \`club-website\` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
--- USE \`club-website\`;
+-- IMPORTANT :
+--  - Le nom de la base doit correspondre à DB_NAME dans .env (club-website).
+--  - À exécuter manuellement dans votre client MySQL.
+
+-- Exemple :
+-- CREATE DATABASE IF NOT EXISTS `club-website`
+--   CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- USE `club-website`;
 
 -- ==========================
 -- Table users
@@ -23,7 +29,6 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- ==========================
 -- Table containers
--- Représente les sections / blocs principaux de la page
 -- ==========================
 CREATE TABLE IF NOT EXISTS containers (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +48,6 @@ CREATE TABLE IF NOT EXISTS containers (
 
 -- ==========================
 -- Table cards
--- Cartes affichées à l'intérieur d'un container
 -- ==========================
 CREATE TABLE IF NOT EXISTS cards (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

@@ -1,20 +1,25 @@
 /**
- * Connexion MySQL centralisée.
- * Utilise mysql2/promise + pool de connexions.
- * Les paramètres viennent de config/default.js qui lit .env
+ * Projet      : Club Website
+ * Fichier     : src/repositories/db.js
+ * Auteur      : Freezer64
+ * Code        : CW-DB-001
+ * Description : Connexion MySQL centralisée (pool mysql2/promise).
+ * Créé le     : 2025-12-10T23:45:00Z
  */
 
-const mysql = require("mysql2/promise");
-const config = require("../../config/default");
-const logger = require("../utils/logger");
+var mysql = require("mysql2/promise");
+var config = require("../../config/default");
+var logger = require("../utils/logger");
 
-let pool;
+var pool = null;
 
 /**
  * Initialise le pool de connexions MySQL (singleton).
  */
 async function initDB() {
-  if (pool) return pool;
+  if (pool) {
+    return pool;
+  }
 
   try {
     pool = mysql.createPool({
@@ -24,17 +29,18 @@ async function initDB() {
       database: config.db.name,
       waitForConnections: true,
       connectionLimit: 10,
-      queueLimit: 0,
+      queueLimit: 0
     });
 
-    // Test de connexion
-    const connection = await pool.getConnection();
+    var connection = await pool.getConnection();
     await connection.ping();
     connection.release();
 
-    logger.info("Connexion MySQL établie avec succès.");
+    logger.info("✅ [CW-DB-001] Connexion MySQL établie avec succès");
   } catch (err) {
-    logger.error("Erreur lors de la connexion MySQL", { message: err.message });
+    logger.error("❌ [CW-DB-001] Erreur lors de la connexion MySQL", {
+      message: err.message
+    });
     throw err;
   }
 
@@ -42,19 +48,23 @@ async function initDB() {
 }
 
 /**
- * Exécute une requête SQL de manière sécurisée
- * en utilisant des paramètres (évite les injections SQL).
+ * Exécute une requête SQL sécurisée avec paramètres.
  */
-async function query(sql, params = []) {
+async function query(sql, params) {
+  if (!params) {
+    params = [];
+  }
+
   if (!pool) {
     await initDB();
   }
 
-  const [rows] = await pool.execute(sql, params);
+  var result = await pool.execute(sql, params);
+  var rows = result[0];
   return rows;
 }
 
 module.exports = {
-  initDB,
-  query,
+  initDB: initDB,
+  query: query
 };
